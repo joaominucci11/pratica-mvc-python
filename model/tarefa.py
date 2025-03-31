@@ -1,7 +1,8 @@
 from model.database import Database
  
 class Tarefa:
-    def __init__(self, titulo, data_conclusao):
+    def __init__(self, titulo,id=None, data_conclusao=None):
+        self.id = id
         self.titulo = titulo
         self.data_conclusao = data_conclusao
  
@@ -15,7 +16,8 @@ class Tarefa:
         db.executar(sql, params)
         db.desconectar()
 
-    def listarFarefa():
+    @staticmethod
+    def listarTarefa():
         """Retornar uma lista com todas as tarefas cadastradas."""
         db = Database()
         db.conectar()
@@ -25,8 +27,14 @@ class Tarefa:
         db.desconectar()
         return tarefas if tarefas else []
     
-        if tarefas:
-            return tarefas
-        else:
-            return []
+    def apagarTarefa(self):
+        db = Database()
+        db.conectar()
+
+        sql = 'DELETE FROM tarefa WHERE id = %s'
+        params = (self.id)
+        db.executar(sql, params)
+        db.conectar()
     
+tarefa = Tarefa(2, 'Teste de tarefa', None)
+tarefa.apagarTarefa()
